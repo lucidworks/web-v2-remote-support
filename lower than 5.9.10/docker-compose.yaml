@@ -1,0 +1,82 @@
+version: '3'
+
+services:
+  selenium-hub:
+    image: selenium/hub:4.20.0
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"  # WebDriver and UI
+      - "4442:4442"  # Event bus publish
+      - "4443:4443"  # Event bus subscribe
+    environment:
+      - SE_GRID_BROWSER_TIMEOUT=300
+      - SE_GRID_TIMEOUT=300
+    networks:
+      - selenium-grid
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  chrome-node-1:
+    image: selenium/node-chrome:4.20.0
+    container_name: chrome-node-1
+    shm_size: 2g
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+      - SE_NODE_SESSION_TIMEOUT=60
+      # The node-chrome container sets its own NODE_HOST
+    networks:
+      - selenium-grid
+    restart: always
+
+  chrome-node-2:
+    image: selenium/node-chrome:4.20.0
+    container_name: chrome-node-2
+    shm_size: 2g
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+      - SE_NODE_SESSION_TIMEOUT=60
+      # The node-chrome container sets its own NODE_HOST
+    networks:
+      - selenium-grid
+    restart: always
+
+  lucidworks-connector:
+    image: eclipse-temurin:11.0.27_6-jre-jammy
+    container_name: lucidworks-remote-connector
+    working_dir: /app
+    command: >
+      sh -c "if [ ! -f /app/bin/connector-plugin-standalone-*.jar ] || [ ! -f /app/bin/lucidworks.connector.web-v2-2*.zip ]; then
+             echo 'ERROR: Required files connector-plugin-standalone jar or lucidworks.connector.web zip are missing';
+             echo 'Please download them from Lucidworks support and place them in the bin directory';
+             sleep infinity;
+             else
+             cp /app/bin/lucidworks.connector.web-v2-*.zip /app/connector-plugin.zip &&
+             java -Dlogging.config=/app/bin/conf/logback.xml -jar /app/bin/connector-plugin-standalone-*.jar /app/bin/conf/connector-config.yaml;
+             fi"
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+    ports:
+      - "8764:8764"  # Default Lucidworks connector port
+    volumes:
+      - ./bin:/app/bin
+    networks:
+      - selenium-grid
+
+networks:
+  selenium-grid:
