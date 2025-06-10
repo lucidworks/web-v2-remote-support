@@ -1,0 +1,27 @@
+kafka-bridge:
+  target: mc59x-connectors-backend.lucidworkstest.com:443
+  plain-text: false
+  # Optional proxy server configuration - uncomment if needed
+  # proxy-server:
+  #   host: proxy-host
+  #   port: 8080
+  #   user: proxy-user
+  #   password: proxy-password
+  # Optional trust configuration for TLS certificates
+  # trust:
+  #   cert-collection-filepath: /path/to/certificates
+proxy:
+  user: admin
+  password: "password123"
+  url: https://mc59x.lucidworkstest.com/
+# DONT CHANGE THIS
+# This is the default connector plugin path
+# It is used by the connector plugin to find the connector plugin jar
+# and the lucidworks.connector.web zip
+# The connector plugin jar and the lucidworks.connector.web zip
+# are copied to this path by the lucidworks-connector container
+# The lucidworks-connector container is mounted to the bin directory
+# of the lucidworks-connector container
+plugin:
+  path: /app/connector-plugin.zip
+  suffix: remote-
