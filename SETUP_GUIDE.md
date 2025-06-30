@@ -19,7 +19,6 @@ Ensure you have the following installed on your system:
 - Docker Engine 19.03.0+
 - Docker Compose 1.27.0+
 - Compatible Operating System:
-  - macOS (Intel/Apple Silicon)
   - Linux (x86_64)
   - Windows with WSL2
 
@@ -28,8 +27,8 @@ Ensure you have the following installed on your system:
 ## File Structure
 
 The repository is organized into two main directories based on the connector plugin version:
-- `5.9.10 and greater/` - For connector plugin standalone version 5.9.10 and newer
-- `lower than 5.9.10/` - For connector plugin standalone versions older than 5.9.10
+- `docker-compose/jdk17` - For connector plugin standalone version 5.9.11 and newer
+- `docker-compose/jdk11` - For connector plugin standalone versions older than 5.9.10
 
 Each directory contains:
 - `docker-compose.yaml` - Docker Compose configuration file
@@ -46,26 +45,12 @@ Each directory contains:
 
    a. **Web V2 Connector Plugin**:
       - Find the latest version of `lucidworks.connector.web-v2` from the "Current plugin version" section
-      - Current latest version: `lucidworks.connector.web-v2-2.0.1.zip` (Released: Apr 24, 2025)
+      - Current latest version: `lucidworks.connector.web-v2-2.1.0.zip` (Released: Apr 24, 2025)
 
    b. **Connector Plugin Standalone Jar**:
       - Choose the appropriate version based on your requirements
       - Latest version: `connector-plugin-standalone-5.9.12.jar` (Released: Apr 16, 2025)
       - Other available versions: 5.9.11, 5.9.10, 5.9.9, 5.9.8, 5.9.7, etc.
-
-3. Create the appropriate directory structure and place the downloaded files:
-
-```bash
-# For connector-plugin-standalone-5.9.10 or newer
-mkdir -p "5.9.10 and greater/bin"
-cp /path/to/downloaded/connector-plugin-standalone-5.9.*.jar "5.9.10 and greater/bin/"
-cp /path/to/downloaded/lucidworks.connector.web-v2-*.zip "5.9.10 and greater/bin/"
-
-# For connector-plugin-standalone older than 5.9.10
-mkdir -p "lower than 5.9.10/bin"
-cp /path/to/downloaded/connector-plugin-standalone-5.*.jar "lower than 5.9.10/bin/"
-cp /path/to/downloaded/lucidworks.connector.web-v2-*.zip "lower than 5.9.10/bin/"
-```
 
 ## Step 2: Choose the Right Version
 
@@ -95,7 +80,6 @@ Based on the connector plugin standalone version you downloaded, choose the appr
    ```yaml
    kafka-bridge:
      target: your-connectors-backend.example.com:443
-     plain-text: false
      # Uncomment proxy-server section if needed
    
    proxy:
@@ -105,7 +89,8 @@ Based on the connector plugin standalone version you downloaded, choose the appr
    
    plugin:
      path: /app/connector-plugin.zip
-     suffix: remote-
+     type:
+      suffix: remote-
    ```
 
    - `kafka-bridge.target`: Your Fusion Connectors backend service
