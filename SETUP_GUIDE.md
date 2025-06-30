@@ -45,7 +45,7 @@ Each directory contains:
 
    a. **Web V2 Connector Plugin**:
       - Find the latest version of `lucidworks.connector.web-v2` from the "Current plugin version" section
-      - Current latest version: `lucidworks.connector.web-v2-2.1.0.zip` (Released: Apr 24, 2025)
+      - Current latest version: `lucidworks.connector.web-v2-2.1.0.zip`
 
    b. **Connector Plugin Standalone Jar**:
       - Choose the appropriate version based on your requirements
