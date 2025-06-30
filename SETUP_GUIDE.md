@@ -58,12 +58,12 @@ Based on the connector plugin standalone version you downloaded, choose the appr
 
 1. If you downloaded version 5.9.10 or newer:
    ```bash
-   cd "5.9.10 and greater"
+   cd "docker-compose/jdk11"
    ```
 
 2. If you downloaded a version older than 5.9.10:
    ```bash
-   cd "lower than 5.9.10"
+   cd "docker-compose/jdk17"
    ```
 
 > **Note**: The main difference between these setups is the Java version used in the Docker image. Newer connector versions (5.9.10+) use Java 17, while older versions use Java 11.
