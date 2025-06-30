@@ -130,8 +130,7 @@ docker-compose down -v
 
 1. **Plugin Path Issues**: If the Lucidworks connector fails to start, check that the plugin path in `connector-config.yaml` is set to `/app/connector-plugin.zip` and the JAR file is correctly mounted in the container.
 
-2. **Platform Compatibility Warnings**: On Apple Silicon Macs, you may see platform compatibility warnings for amd64 images. In most cases, the services will still function correctly through Docker's emulation layer.
-
+2. **Platform Compatibility Warnings**: On Apple Silicon Macs, you will see platform compatibility issues 
 3. **Connection Issues**: If the Lucidworks connector cannot connect to Kafka or Fusion, ensure the correct hostnames/URLs are set in `connector-config.yaml`.
 
 ### Checking Container Status
