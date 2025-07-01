@@ -37,9 +37,9 @@ To deploy to Kubernetes:
 
 1. Apply the configurations:
 ```bash
-kubectl apply -f deployment.yaml
-kubectl apply -f chrome-deployment.yaml
-kubectl apply -f service.yaml
+kubectl apply -f deployment.yaml -n {{namespace}}
+kubectl apply -f chrome-deployment.yaml -n {{namespace}}
+kubectl apply -f service.yaml -n {{namespace}}
 ```
 
 2. Verify the deployments:
