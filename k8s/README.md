@@ -47,7 +47,18 @@ kubectl apply -f service.yaml
 kubectl get pods -n {{namespace}}
 kubectl get services -n {{namespace}}
 ```
-
+### Adjust the networkpolice
+```bash
+kubectl edit networkpolicy {{namespace}}-connector-plugin -n {{namepsace}}
+```
+add the following snippet
+```
+- ports:
+  - port: 4444
+    protocol: TCP
+  - port: 4444
+    protocol: UDP
+```
 ## Notes
 
 - The Chrome nodes use shared memory size of 2GB for better performance
