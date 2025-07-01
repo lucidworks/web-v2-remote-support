@@ -1,6 +1,6 @@
 # Selenium Grid Hub Setup
 
-This repository contains configurations for running a Selenium Grid Hub with Chrome nodes in both Kubernetes environments.
+This repository contains configurations for running a Selenium Grid Hub with Chrome nodes in Kubernetes environments.
 
 ## Overview
 
