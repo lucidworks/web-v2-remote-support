@@ -47,7 +47,7 @@ kubectl apply -f service.yaml
 kubectl get pods -n {{namespace}}
 kubectl get services -n {{namespace}}
 ```
-### Adjust the networkpolice
+### Adjust the network policy
 ```bash
 kubectl edit networkpolicy {{namespace}}-connector-plugin -n {{namepsace}}
 ```
