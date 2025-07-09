@@ -26,17 +26,17 @@ spec:
             - name: SE_EVENT_BUS_SUBSCRIBE_PORT
               value: "4443"
             - name: SE_NODE_MAX_SESSIONS
-              value: "4"
+              value: "1"
             - name: SE_NODE_SESSION_TIMEOUT
               value: "60"
-            - name: SE_VNC_NO_PASSWORD
-              value: "1"
-            - name: SE_SCREEN_WIDTH
-              value: "1920"
-            - name: SE_SCREEN_HEIGHT
-              value: "1080"
-            - name: SE_SCREEN_DEPTH
-              value: "24"
+            #- name: SE_VNC_NO_PASSWORD
+            #  value: "1"
+            #- name: SE_SCREEN_WIDTH
+            #  value: "1920"
+            #- name: SE_SCREEN_HEIGHT
+            #  value: "1080"
+            #- name: SE_SCREEN_DEPTH
+            #  value: "24"
             - name: SE_NODE_HOST
               valueFrom:
                 fieldRef:
