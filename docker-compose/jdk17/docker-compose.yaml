@@ -39,7 +39,6 @@ services:
       #- SE_NO_VNC=true
       #- SE_VNC_NO_PASSWORD=1
     #ports: # add port section
-    #  - "5900:5900"  # VNC port
     #  - "7900:7900"  # noVNC web interface port for node-1
     networks:
       - selenium-grid
