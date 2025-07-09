@@ -146,7 +146,7 @@ docker-compose up
 
 This starts all services and displays logs in the terminal. Press `Ctrl+C` to stop.
 
-## Step 3: Verify Services
+## Step 5: Verify Services
 
 1. **Check Selenium Grid Console**:
    - Open a web browser and navigate to: http://localhost:4444/ui
