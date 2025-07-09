@@ -33,7 +33,7 @@ You need to update your `docker-compose.yaml` file to enable noVNC support. Belo
 
 ### For "jdk11 or jdk17" Directory
 
-Add the following environment variables and port mappings to your Chrome node services:
+Add the following environment variables and port mappings to your Chrome node services chrome-node-1 and chrome-node-2:
 
 ```yaml
 # filepath: docker-compose/jdk11/docker-compose.yaml
@@ -54,9 +54,12 @@ services:
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_SESSION_TIMEOUT=60
-    ports:
-      - "5900:5900"  # VNC port
-      - "7900:7900"  # noVNC web interface port
+      # Enable VNC settings
+      - SE_ENABLE_VNC=true
+      - SE_NO_VNC=true
+      - SE_VNC_NO_PASSWORD=1
+    ports: # add 'ports' section
+      - "7900:7900"  # add noVNC web interface port for node-1
     networks:
       - selenium-grid
     restart: always
@@ -73,8 +76,12 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_MAX_SESSIONS=4
       - SE_NODE_SESSION_TIMEOUT=60
-    ports:
-      - "7901:7900"  # noVNC web interface port (different from node-1)
+       # Enable VNC settings
+      - SE_ENABLE_VNC=true
+      - SE_NO_VNC=true
+      - SE_VNC_NO_PASSWORD=1
+    ports: # add ports section
+      - "7901:7900"  # noVNC web interface port for node-2 (different from node-1)
     networks:
       - selenium-grid
     restart: always
