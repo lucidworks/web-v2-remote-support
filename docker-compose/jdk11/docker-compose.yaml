@@ -34,6 +34,13 @@ services:
       - SE_NODE_MAX_SESSIONS=4
       - SE_NODE_SESSION_TIMEOUT=60
       # The node-chrome container sets its own NODE_HOST
+      # Enable VNC settings
+      #- SE_ENABLE_VNC=true
+      #- SE_NO_VNC=true
+      #- SE_VNC_NO_PASSWORD=1
+    #ports: # add port section
+    #  - "5900:5900"  # VNC port
+    #  - "7900:7900"  # noVNC web interface port for node-1
     networks:
       - selenium-grid
     restart: always
@@ -51,6 +58,12 @@ services:
       - SE_NODE_MAX_SESSIONS=4
       - SE_NODE_SESSION_TIMEOUT=60
       # The node-chrome container sets its own NODE_HOST
+      # Enable VNC settings
+      #- SE_ENABLE_VNC=true
+      #- SE_NO_VNC=true
+      #- SE_VNC_NO_PASSWORD=1
+    #ports:
+    #  - "7901:7900"  # noVNC web interface port for node-2 (different from node-1)
     networks:
       - selenium-grid
     restart: always

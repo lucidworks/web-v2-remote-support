@@ -27,8 +27,8 @@ Ensure you have the following installed on your system:
 ## File Structure
 
 The repository is organized into two main directories based on the connector plugin version:
-- `docker-compose/jdk17` - For connector plugin standalone version 5.9.11 and newer
-- `docker-compose/jdk11` - For connector plugin standalone versions older than 5.9.10
+- `docker-compose/jdk17` - For connector plugin standalone version >=5.9.11
+- `docker-compose/jdk11` - For connector plugin standalone versions <= 5.9.10
 
 Each directory contains:
 - `docker-compose.yaml` - Docker Compose configuration file
@@ -52,6 +52,27 @@ Each directory contains:
       - Latest version: `connector-plugin-standalone-5.9.12.jar` (Released: Apr 16, 2025)
       - Other available versions: 5.9.11, 5.9.10, 5.9.9, 5.9.8, 5.9.7, etc.
 
+3. Locate the downloaded files and place them in the `bin` directory of your chosen Docker Compose setup.
+
+   Example structure:
+   ```
+   docker-compose/
+   ├── jdk11/
+   │   ├── bin/
+   │   │   ├── connector-plugin-standalone-5.9.10.jar
+   │   │   ├── lucidworks.connector.web-v2-2.1.0.zip
+   │   │   └── conf/
+   │   │       ├── connector-config.yaml
+   │   │       └── logback.xml
+   └── jdk17/
+       ├── bin/
+           ├── connector-plugin-standalone-5.9.11.jar
+           ├── lucidworks.connector.web-v2-2.1.0.zip
+           └── conf/
+               ├── connector-config.yaml
+               └── logback.xml
+   ```
+
 ## Step 2: Choose the Right Version
 
 Based on the connector plugin standalone version you downloaded, choose the appropriate directory:
@@ -66,9 +87,13 @@ Based on the connector plugin standalone version you downloaded, choose the appr
    cd "docker-compose/jdk17"
    ```
 
-> **Note**: The main difference between these setups is the Java version used in the Docker image. Newer connector versions (5.9.10+) use Java 17, while older versions use Java 11.
+> **Note**: The main difference between these setups is the Java version used in the Docker image. Newer connector versions (>=5.9.11) use Java 17, while older versions use Java 11.
 
 ## Step 3: Configure the Connector
+Configure:
+   - Kafka bridge settings
+   - Proxy settings
+   - Plugin path
 
 1. Edit the connector configuration file:
    ```bash
@@ -90,7 +115,7 @@ Based on the connector plugin standalone version you downloaded, choose the appr
    plugin:
      path: /app/connector-plugin.zip
      type:
-      suffix: remote-
+      suffix: remote
    ```
 
    - `kafka-bridge.target`: Your Fusion Connectors backend service
@@ -102,7 +127,10 @@ Based on the connector plugin standalone version you downloaded, choose the appr
 
 ## Step 4: Start the Docker Compose Environment
 
+Locate to the setup directory, e.g. web-v2-remote-support/docker-compose/jdk17
+
 ### Option 1: Start in Background Mode
+
 
 ```bash
 docker-compose up -d
@@ -118,7 +146,7 @@ docker-compose up
 
 This starts all services and displays logs in the terminal. Press `Ctrl+C` to stop.
 
-## Step 5: Verify Services
+## Step 3: Verify Services
 
 1. **Check Selenium Grid Console**:
    - Open a web browser and navigate to: http://localhost:4444/ui
@@ -161,6 +189,14 @@ This starts all services and displays logs in the terminal. Press `Ctrl+C` to st
    - On Apple Silicon Macs, you may see platform compatibility warnings for amd64 images
    - In most cases, the Lucidworks connector will still work through Docker's emulation layer
 
+### Checking Container Status
+
+```bash
+docker-compose ps
+```
+
+This will show the running status of all containers defined in your docker-compose file.
+
 ### Viewing Logs
 
 ```bash
@@ -168,8 +204,7 @@ This starts all services and displays logs in the terminal. Press `Ctrl+C` to st
 docker-compose logs -f
 
 # View logs for a specific service
-docker-compose logs -f lucidworks-connector
-
+http://localhost:4444/ui
 # View recent log entries
 docker-compose logs --tail=100
 
