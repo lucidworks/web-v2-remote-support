@@ -77,12 +77,12 @@ Each directory contains:
 
 Based on the connector plugin standalone version you downloaded, choose the appropriate directory:
 
-1. If you downloaded version 5.9.10 or newer:
+1. If you downloaded version 5.9.10 or older:
    ```bash
    cd "docker-compose/jdk11"
    ```
 
-2. If you downloaded a version older than 5.9.10:
+2. If you downloaded a version newer than 5.9.10:
    ```bash
    cd "docker-compose/jdk17"
    ```
