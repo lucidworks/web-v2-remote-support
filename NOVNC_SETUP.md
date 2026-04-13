@@ -44,7 +44,7 @@ services:
     # ...existing hub configuration...
 
   chrome-node-1:
-    image: selenium/node-chrome:4.20.0
+    image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
     container_name: chrome-node-1
     shm_size: 2g
     depends_on:
@@ -65,7 +65,7 @@ services:
     restart: always
 
   chrome-node-2:
-    image: selenium/node-chrome:4.20.0
+    image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
     container_name: chrome-node-2
     shm_size: 2g
     depends_on:
