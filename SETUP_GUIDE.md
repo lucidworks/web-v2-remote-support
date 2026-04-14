@@ -48,8 +48,8 @@ Each directory contains:
       - Current latest version: `lucidworks.connector.web-v2-2.1.0.zip`
 
    b. **Connector Plugin Standalone Jar**:
-      - Choose the appropriate version based on your requirements
-      - Latest version: `connector-plugin-standalone-5.9.12.jar` (Released: Apr 16, 2025)
+      - Choose the appropriate version based on the version of the Fusion environment you have deployed.
+      - Latest version: `connector-plugin-standalone-5.9.16.jar` (Released: March 5, 2026)
       - Other available versions: 5.9.11, 5.9.10, 5.9.9, 5.9.8, 5.9.7, etc.
 
 3. Locate the downloaded files and place them in the `bin` directory of your chosen Docker Compose setup.
@@ -77,14 +77,14 @@ Each directory contains:
 
 Based on the connector plugin standalone version you downloaded, choose the appropriate directory:
 
-1. If you downloaded version 5.9.10 or newer:
-   ```bash
-   cd "docker-compose/jdk11"
-   ```
-
-2. If you downloaded a version older than 5.9.10:
+1. If you downloaded version 5.9.11 or newer:
    ```bash
    cd "docker-compose/jdk17"
+   ```
+
+2. If you downloaded version 5.9.10 or older:
+   ```bash
+   cd "docker-compose/jdk11"
    ```
 
 > **Note**: The main difference between these setups is the Java version used in the Docker image. Newer connector versions (>=5.9.11) use Java 17, while older versions use Java 11.
@@ -127,7 +127,7 @@ Configure:
 
 ## Step 4: Start the Docker Compose Environment
 
-Locate to the setup directory, e.g. web-v2-remote-support/docker-compose/jdk17
+Locate the setup directory, e.g. web-v2-remote-support/docker-compose/jdk17
 
 ### Option 1: Start in Background Mode
 
@@ -149,7 +149,7 @@ This starts all services and displays logs in the terminal. Press `Ctrl+C` to st
 ## Step 5: Verify Services
 
 1. **Check Selenium Grid Console**:
-   - Open a web browser and navigate to: http://localhost:4444/ui
+   - Open a web browser and navigate to: http://localhost:4444/ui/
    - Verify that the Selenium Hub is running and Chrome nodes are connected
 
 2. **Verify Lucidworks Connector**:

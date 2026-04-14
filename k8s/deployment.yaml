@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: selenium-hub
-          image: selenium/hub:4.20.0
+          image: lucidworks/fusion3p-selenium-hub:4.38.0
           ports:
             - containerPort: 4442 # Event bus
             - containerPort: 4443 # Event bus

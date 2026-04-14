@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: selenium-node-chrome
-          image: selenium/node-chrome:4.20.0
+          image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
           ports:
             - containerPort: 5555  # Node port
             - containerPort: 7900  # VNC port
