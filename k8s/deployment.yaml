@@ -24,6 +24,8 @@ spec:
               value: "300"
             - name: SE_GRID_TIMEOUT
               value: "300"
+            - name: SE_SESSION_TIMEOUT
+              value: "60"
           resources:
             requests:
               memory: "512Mi"

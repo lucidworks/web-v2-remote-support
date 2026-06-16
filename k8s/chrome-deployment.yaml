@@ -29,6 +29,12 @@ spec:
               value: "1"
             - name: SE_NODE_SESSION_TIMEOUT
               value: "60"
+            - name: SE_SESSION_TIMEOUT
+              value: "60"
+            - name: SE_NODE_OVERRIDE_MAX_SESSIONS
+              value: "true"
+            - name: SE_NODE_DRAIN_AFTER_SESSION_COUNT
+              value: "200"
             #- name: SE_VNC_NO_PASSWORD
             #  value: "1"
             #- name: SE_SCREEN_WIDTH
@@ -41,6 +47,22 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 5555
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 5555
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
           resources:
             requests:
               memory: "2Gi"
