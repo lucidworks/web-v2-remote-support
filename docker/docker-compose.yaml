@@ -2,7 +2,7 @@ version: '3'
 
 services:
   selenium-hub:
-    image: selenium/hub:4.20.0
+    image: lucidworks/fusion3p-selenium-hub:4.38.0
     container_name: selenium-hub
     ports:
       - "4444:4444"  # WebDriver and UI
@@ -23,7 +23,7 @@ services:
       start_period: 10s
 
   chrome-node-1:
-    image: selenium/node-chrome:4.20.0
+    image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
     container_name: chrome-node-1
     shm_size: 2g
     depends_on:
@@ -41,7 +41,7 @@ services:
       - selenium-grid
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -66,7 +66,7 @@ services:
       - selenium-grid
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
       interval: 30s
       timeout: 10s
       retries: 5
