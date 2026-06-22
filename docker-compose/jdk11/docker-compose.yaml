@@ -26,7 +26,8 @@ services:
     container_name: chrome-node-1
     shm_size: 2g
     depends_on:
-      - selenium-hub
+      selenium-hub:
+        condition: service_healthy
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -43,13 +44,20 @@ services:
     networks:
       - selenium-grid
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   chrome-node-2:
     image: selenium/node-chrome:4.20.0
     container_name: chrome-node-2
     shm_size: 2g
     depends_on:
-      - selenium-hub
+      selenium-hub:
+        condition: service_healthy
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -66,6 +74,12 @@ services:
     networks:
       - selenium-grid
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   lucidworks-connector:
     image: eclipse-temurin:11.0.27_6-jre-jammy
