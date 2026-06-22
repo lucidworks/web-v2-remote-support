@@ -19,17 +19,18 @@ services:
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
-      interval: 5s
-      timeout: 3s
-      retries: 7
-      start_period: 15s
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   chrome-node-1:
     image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
     container_name: chrome-node-1
     shm_size: 2g
     depends_on:
-      - selenium-hub
+      selenium-hub:
+        condition: service_healthy
     security_opt:
       - no-new-privileges:true
     tmpfs:
@@ -47,13 +48,20 @@ services:
     networks:
       - selenium-grid
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   chrome-node-2:
     image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
     container_name: chrome-node-2
     shm_size: 2g
     depends_on:
-      - selenium-hub
+      selenium-hub:
+        condition: service_healthy
     security_opt:
       - no-new-privileges:true
     tmpfs:
@@ -71,6 +79,12 @@ services:
     networks:
       - selenium-grid
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   lucidworks-connector:
     image: eclipse-temurin:17-jdk-jammy
