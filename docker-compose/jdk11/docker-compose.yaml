@@ -2,7 +2,7 @@ version: '3'
 
 services:
   selenium-hub:
-    image: lucidworks/fusion3p-selenium-hub:4.38.0
+    image: selenium/hub:4.20.0
     container_name: selenium-hub
     ports:
       - "4444:4444"  # WebDriver and UI
@@ -22,7 +22,7 @@ services:
       start_period: 10s
 
   chrome-node-1:
-    image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
+    image: selenium/node-chrome:4.20.0
     container_name: chrome-node-1
     shm_size: 2g
     depends_on:
