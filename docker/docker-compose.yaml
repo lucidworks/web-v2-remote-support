@@ -27,7 +27,8 @@ services:
     container_name: chrome-node-1
     shm_size: 2g
     depends_on:
-      - selenium-hub
+      selenium-hub:
+        condition: service_healthy
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -41,7 +42,7 @@ services:
       - selenium-grid
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -52,7 +53,8 @@ services:
     container_name: chrome-node-2
     shm_size: 2g
     depends_on:
-      - selenium-hub
+      selenium-hub:
+        condition: service_healthy
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -66,7 +68,7 @@ services:
       - selenium-grid
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      test: ["CMD", "curl", "-f", "http://localhost:5555/status"]
       interval: 30s
       timeout: 10s
       retries: 5
