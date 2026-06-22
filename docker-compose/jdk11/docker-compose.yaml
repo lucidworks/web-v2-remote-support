@@ -52,7 +52,7 @@ services:
       start_period: 30s
 
   chrome-node-2:
-    image: selenium/node-chrome:4.20.0
+    image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
     container_name: chrome-node-2
     shm_size: 2g
     depends_on:
