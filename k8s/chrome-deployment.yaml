@@ -51,18 +51,18 @@ spec:
             httpGet:
               path: /status
               port: 5555
-            initialDelaySeconds: 30
-            periodSeconds: 30
+            initialDelaySeconds: 3
+            periodSeconds: 10
             timeoutSeconds: 10
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /status
               port: 5555
-            initialDelaySeconds: 15
+            initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 10
-            failureThreshold: 3
+            failureThreshold: 5
           resources:
             requests:
               memory: "2Gi"
