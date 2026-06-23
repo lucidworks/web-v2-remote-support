@@ -27,13 +27,13 @@ spec:
             - name: SE_SESSION_TIMEOUT
               value: "60"
           livenessProbe:
-                httpGet:
-                  path: /wd/hub/status
-                  port: 4444
-                initialDelaySeconds: 3
-                periodSeconds: 10
-                timeoutSeconds: 10
-                failureThreshold: 5
+            httpGet:
+              path: /wd/hub/status
+              port: 4444
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /wd/hub/status
