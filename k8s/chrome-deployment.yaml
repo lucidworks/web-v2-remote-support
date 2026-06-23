@@ -12,12 +12,58 @@ spec:
       labels:
         app: selenium-node-chrome
     spec:
+      securityContext:
+        fsGroup: 8764
+        runAsUser: 8764
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: var-log
+          emptyDir: {}
+        - name: var-run
+          emptyDir: {}
+        - name: opt-selenium
+          emptyDir: {}
+        - name: home-fusion
+          emptyDir: {}
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
       containers:
         - name: selenium-node-chrome
           image: lucidworks/fusion3p-selenium-node-chrome:4.38.0
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
           ports:
-            - containerPort: 5555  # Node port
-            - containerPort: 7900  # VNC port
+            - name: node
+              containerPort: 5555
+              protocol: TCP
+            - name: vnc
+              containerPort: 7900
+              protocol: TCP
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: var-log
+              mountPath: /var/log
+            - name: var-run
+              mountPath: /var/run
+            - name: opt-selenium
+              mountPath: /opt/selenium
+            - name: home-fusion
+              mountPath: /home/fusion
+            - name: dshm
+              mountPath: /dev/shm
           env:
             - name: SE_EVENT_BUS_HOST
               value: selenium-hub
@@ -25,24 +71,18 @@ spec:
               value: "4442"
             - name: SE_EVENT_BUS_SUBSCRIBE_PORT
               value: "4443"
-            - name: SE_NODE_MAX_SESSIONS
-              value: "1"
-            - name: SE_NODE_SESSION_TIMEOUT
-              value: "60"
             - name: SE_SESSION_TIMEOUT
               value: "60"
+            - name: SE_NODE_SESSION_TIMEOUT
+              value: "60"
+            - name: SE_NODE_MAX_SESSIONS
+              value: "1"
             - name: SE_NODE_OVERRIDE_MAX_SESSIONS
               value: "true"
             - name: SE_NODE_DRAIN_AFTER_SESSION_COUNT
               value: "200"
-            #- name: SE_VNC_NO_PASSWORD
-            #  value: "1"
-            #- name: SE_SCREEN_WIDTH
-            #  value: "1920"
-            #- name: SE_SCREEN_HEIGHT
-            #  value: "1080"
-            #- name: SE_SCREEN_DEPTH
-            #  value: "24"
+            - name: HOME
+              value: /home/fusion
             - name: SE_NODE_HOST
               valueFrom:
                 fieldRef:
