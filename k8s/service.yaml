@@ -15,6 +15,3 @@ spec:
     - name: subscribe
       port: 4443
       targetPort: 4443
-    - name: vnc
-      port: 7900
-      targetPort: 7900

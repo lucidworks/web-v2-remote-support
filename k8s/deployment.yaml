@@ -12,18 +12,80 @@ spec:
       labels:
         app: selenium-hub
     spec:
+      securityContext:
+        fsGroup: 8764
+        runAsUser: 8764
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: var-log
+          emptyDir: {}
+        - name: var-run
+          emptyDir: {}
+        - name: home-fusion
+          emptyDir: {}
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
       containers:
         - name: selenium-hub
           image: lucidworks/fusion3p-selenium-hub:4.38.0
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
           ports:
-            - containerPort: 4442 # Event bus
-            - containerPort: 4443 # Event bus
-            - containerPort: 4444 # UI and WebDriver
+            - name: event-bus-pub
+              containerPort: 4442
+              protocol: TCP
+            - name: event-bus-sub
+              containerPort: 4443
+              protocol: TCP
+            - name: selenium-hub
+              containerPort: 4444
+              protocol: TCP
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: var-log
+              mountPath: /var/log
+            - name: var-run
+              mountPath: /var/run
+            - name: home-fusion
+              mountPath: /home/fusion
+            - name: dshm
+              mountPath: /dev/shm
           env:
             - name: SE_GRID_BROWSER_TIMEOUT
               value: "300"
             - name: SE_GRID_TIMEOUT
               value: "300"
+            - name: SE_SESSION_TIMEOUT
+              value: "60"
+          livenessProbe:
+            httpGet:
+              path: /wd/hub/status
+              port: 4444
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /wd/hub/status
+              port: 4444
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
           resources:
             requests:
               memory: "512Mi"

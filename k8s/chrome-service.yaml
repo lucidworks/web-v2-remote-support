@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: selenium-node-chrome
+spec:
+  selector:
+    app: selenium-node-chrome
+  ports:
+    - name: node
+      port: 5555
+      targetPort: 5555
+    - name: vnc
+      port: 7900
+      targetPort: 7900
